@@ -671,6 +671,62 @@ footer .easter-egg-hint:hover {
   background: rgba(51, 255, 51, 0.1);
 }
 
+/* on-screen joystick — only shown on touch devices */
+.ctrl-hint-touch { display: none; }
+body.touch .ctrl-hint-kbd { display: none; }
+body.touch .ctrl-hint-touch { display: inline; }
+
+#game-dpad { display: none; }
+
+body.touch #game-dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 62px);
+  grid-template-rows: repeat(3, 62px);
+  gap: 8px;
+  margin-top: 20px;
+  touch-action: none;
+}
+
+.dpad-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--fg);
+  border-radius: 10px;
+  background: rgba(51, 255, 51, 0.06);
+  color: var(--fg-bright);
+  font-family: var(--font-main);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--glow);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  transition: transform 0.05s ease, background 0.1s ease, color 0.1s ease;
+}
+
+.dpad-btn.pressed {
+  background: var(--fg);
+  color: var(--bg);
+  transform: scale(0.9);
+}
+
+.dpad-up    { grid-column: 2; grid-row: 1; }
+.dpad-left  { grid-column: 1; grid-row: 2; }
+.dpad-mid   { grid-column: 2; grid-row: 2; }
+.dpad-right { grid-column: 3; grid-row: 2; }
+.dpad-down  { grid-column: 2; grid-row: 3; }
+
+.dpad-mid {
+  border-style: dashed;
+  border-color: var(--fg-dim);
+  background: none;
+  box-shadow: none;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 /* ========== 15. EFFECTS (glitch / tooltip / konami / particles) ========== */
 .glitch {
   position: relative;
@@ -769,9 +825,43 @@ footer .easter-egg-hint:hover {
   .about-grid, .projects-grid { grid-template-columns: 1fr; }
   #contact .contact-grid { grid-template-columns: 1fr; }
   .hero-name { font-size: 18px; }
+  .hero-title { font-size: 20px; }
   .ascii-art { font-size: 8px; }
-  #navbar .nav-links a { font-size: 12px; padding: 4px 6px; }
-  main { padding: 70px 14px 40px; }
+  main { padding: 96px 14px 40px; }
+
+  /* navbar: keep brand + controls on top, scroll the links underneath so the
+     bar never overflows the viewport on a phone */
+  #navbar {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 10px;
+  }
+  #navbar .nav-left { font-size: 9px; }
+  #navbar .nav-links {
+    order: 3;
+    width: 100%;
+    gap: 4px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  #navbar .nav-links::-webkit-scrollbar { display: none; }
+  #navbar .nav-links a {
+    font-size: 12px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+  #navbar .nav-right { gap: 6px; }
+  .theme-btn, .sound-btn { font-size: 14px; padding: 2px 7px; }
+
+  /* snake modal: scrollable + canvas scaled so the joystick always fits */
+  #game-modal { padding: 20px 12px; overflow-y: auto; }
+  #game-canvas {
+    width: min(74vw, 300px);
+    height: min(74vw, 300px);
+  }
 }
 
 /* ========== 17. AVATAR BUDDY ========== */
@@ -951,6 +1041,18 @@ body.theme-pink {
   text-decoration: none;
 }
 .pong-card .proj-src:hover { color: var(--accent); }
+
+/* Pong needs a keyboard, so on touch devices the card is just a GitHub link:
+   hide the "playable" badge + run button and swap the description copy. */
+.pong-desc-mobile { display: none; }
+body.touch .pong-card .proj-runnable,
+body.touch .pong-card .proj-run,
+body.touch .pong-desc-desktop { display: none; }
+body.touch .pong-desc-mobile { display: inline; }
+body.touch .pong-card .proj-src {
+  font-size: 16px;
+  color: var(--accent);
+}
 
 /* The pong window — a draggable terminal that runs the WASM binary */
 #pong-window {

@@ -15,6 +15,16 @@
 
   var COLS = 210, ROWS = 54;          // the game's fixed console dimensions
   var BASE = 'assets/pong/';
+  var REPO = 'https://github.com/Osmansiddiquer/pong';
+
+  // The WASM Pong needs a physical keyboard (W/A/S/D + arrows) and a roomy
+  // terminal — it was never built for touch. On phones/tablets we don't boot
+  // the binary at all; the card just points at the source on GitHub instead.
+  function isTouchDevice() {
+    return (window.matchMedia &&
+            window.matchMedia('(hover: none) and (pointer: coarse)').matches) ||
+           ('ontouchstart' in window && window.innerWidth <= 820);
+  }
 
   var term = null, webglAddon = null, moduleInstance = null;
   var opened = false, generation = 0;
@@ -198,6 +208,10 @@
 
   /* ---------------- public API ---------------------------------------- */
   function open() {
+    if (isTouchDevice()) {            // mobile: open the repo instead of the game
+      window.open(REPO, '_blank', 'noopener');
+      return;
+    }
     buildWindow();
     $('pong-window').classList.add('active');
     opened = true;
@@ -227,5 +241,5 @@
   }
   function toggle() { (opened ? close : open)(); }
 
-  window.OsmanPong = { open: open, close: close, toggle: toggle };
+  window.OsmanPong = { open: open, close: close, toggle: toggle, isTouchDevice: isTouchDevice };
 })();

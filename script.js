@@ -23,6 +23,15 @@
     13. Init
    ============================================================ */
 
+// ========== 0. DEVICE / INPUT MODE ==========
+// Phones & tablets get on-screen joystick controls (and Pong falls back to a
+// GitHub link); desktops keep the keyboard-driven experience.
+const IS_TOUCH =
+  (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ||
+  ('ontouchstart' in window && window.innerWidth <= 820);
+
+if (IS_TOUCH && document.body) document.body.classList.add('touch');
+
 // ========== 1. SOUND ENGINE ==========
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
@@ -292,6 +301,40 @@ document.addEventListener('keydown', (e) => {
 let snakeInterval = null;
 let snake, food, dir, score, gameOver;
 
+// Shared direction vectors — driven by both the keyboard and the on-screen
+// joystick. Ignores 180° reversals (you can't run straight back into yourself).
+const SNAKE_DIRS = {
+  up: { x: 0, y: -1 }, down: { x: 0, y: 1 },
+  left: { x: -1, y: 0 }, right: { x: 1, y: 0 }
+};
+
+function snakeSetDir(name) {
+  const d = SNAKE_DIRS[name];
+  if (!d || !dir || gameOver) return;
+  if (d.x !== -dir.x || d.y !== -dir.y) dir = d;
+}
+
+// Wire the joystick once; it stays inert until a game is running.
+function initSnakeDpad() {
+  const pad = document.getElementById('game-dpad');
+  if (!pad) return;
+  pad.querySelectorAll('.dpad-btn[data-dir]').forEach(btn => {
+    const press = (e) => {
+      e.preventDefault();
+      snakeSetDir(btn.dataset.dir);
+      btn.classList.add('pressed');
+      playBeep(700, 0.03, 0.05);
+    };
+    const release = () => btn.classList.remove('pressed');
+    btn.addEventListener('pointerdown', press);
+    btn.addEventListener('pointerup', release);
+    btn.addEventListener('pointerleave', release);
+    btn.addEventListener('pointercancel', release);
+    // stop touches on the pad from scrolling the page
+    btn.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+  });
+}
+
 function startSnakeGame() {
   const modal = document.getElementById('game-modal');
   modal.classList.add('active');
@@ -373,18 +416,14 @@ function startSnakeGame() {
   }, 100);
 
   // Controls
+  const keyDirs = {
+    ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right'
+  };
   window._snakeKeyHandler = (e) => {
     if (e.key === 'Escape') { closeSnakeGame(); return; }
-    const dirs = {
-      ArrowUp: { x: 0, y: -1 }, ArrowDown: { x: 0, y: 1 },
-      ArrowLeft: { x: -1, y: 0 }, ArrowRight: { x: 1, y: 0 }
-    };
-    if (dirs[e.key]) {
-      const d = dirs[e.key];
-      if (d.x !== -dir.x || d.y !== -dir.y) {
-        dir = d;
-        e.preventDefault();
-      }
+    if (keyDirs[e.key]) {
+      snakeSetDir(keyDirs[e.key]);
+      e.preventDefault();
     }
   };
   document.addEventListener('keydown', window._snakeKeyHandler);
@@ -485,4 +524,6 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(typeWriter, 2600);
   setTimeout(avatarCycle, 3200); // avatar starts chatting after boot
   initScrollReveal();
+  initSnakeDpad();
+  if (IS_TOUCH) document.body.classList.add('touch'); // in case body wasn't ready earlier
 });

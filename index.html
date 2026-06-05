@@ -189,7 +189,7 @@
         <div class="project-card pong-card" onclick="OsmanPong.open()" title="run pong in the browser">
           <span class="proj-lang">C → WASM</span>
           <div class="proj-name">Pong <span class="proj-runnable">▶ playable</span></div>
-          <div class="proj-desc">Console Pong written in plain C — compiled to WebAssembly and rendered live on a WebGL terminal, right here in the site. Click to boot the binary.</div>
+          <div class="proj-desc">Console Pong written in plain C — compiled to WebAssembly and rendered live on a WebGL terminal, right here in the site. <span class="pong-desc-desktop">Click to boot the binary.</span><span class="pong-desc-mobile">Needs a keyboard — tap to view the source on GitHub.</span></div>
           <div class="proj-stars">* 1</div>
           <div class="pong-card-actions">
             <button class="proj-run" onclick="event.stopPropagation(); OsmanPong.open()">▶ run pong.exe</button>
@@ -323,7 +323,15 @@
   <div id="game-modal">
     <h2>SNAKE.EXE</h2>
     <canvas id="game-canvas" width="300" height="300"></canvas>
-    <div class="game-info">Score: <span id="game-score">0</span> // Arrow keys to move</div>
+    <div class="game-info">Score: <span id="game-score">0</span> // <span class="ctrl-hint-kbd">Arrow keys to move</span><span class="ctrl-hint-touch">use the joystick</span></div>
+    <!-- ON-SCREEN JOYSTICK (touch / arcade controls) -->
+    <div id="game-dpad" role="group" aria-label="Movement controls">
+      <button class="dpad-btn dpad-up" data-dir="up" aria-label="Up">▲</button>
+      <button class="dpad-btn dpad-left" data-dir="left" aria-label="Left">◀</button>
+      <button class="dpad-btn dpad-mid" tabindex="-1" aria-hidden="true"></button>
+      <button class="dpad-btn dpad-right" data-dir="right" aria-label="Right">▶</button>
+      <button class="dpad-btn dpad-down" data-dir="down" aria-label="Down">▼</button>
+    </div>
     <button id="game-close" onclick="closeSnakeGame()">[ ESC / CLOSE ]</button>
   </div>
 
