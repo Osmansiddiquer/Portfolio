@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Osman Siddique | Terminal Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/pong/vendor/xterm.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- BACKGROUND MUSIC -->
+  <audio id="bg-music" src="bg.mp3" loop preload="auto"></audio>
+
+  <!-- MATRIX RAIN -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <!-- BOOT SCREEN -->
+  <div id="boot-screen">
+    <div id="boot-text"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-left">OSMAN.SYS</div>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#experience">xp</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#education">edu</a>
+      <a href="#contact">contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-btn tooltip" data-tip="Change theme" onclick="cycleTheme()">[ theme ]</button>
+      <button class="sound-btn tooltip" data-tip="Toggle music" onclick="toggleMusic()" id="music-btn">&#9835; OFF</button>
+      <button class="sound-btn tooltip" data-tip="Toggle sounds" onclick="toggleSound()">SFX: ON</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="visible">
+      <div class="ascii-art" id="ascii-hero">
+ ___  ____  __  __    _    _   _
+/ _ \/ ___||  \/  |  / \  | \ | |
+| | | \___ \| |\/| | / _ \ |  \| |
+| |_| |___) | |  | |/ ___ \| |\  |
+\___/|____/|_|  |_/_/   \_\_| \_|
+      </div>
+      <h1 class="hero-name glitch">OSMAN SIDDIQUE</h1>
+      <p class="hero-title">> CTO @ <span style="color:var(--accent)">Sciloop</span> (YC F25) | MIT CS&E '26</p>
+      <div id="typed-text"><span class="cursor"></span></div>
+      <div class="hero-links">
+        <a href="https://github.com/Osmansiddiquer" target="_blank">[ GitHub ]</a>
+        <a href="https://www.linkedin.com/in/osman-siddiquer/" target="_blank">[ LinkedIn ]</a>
+        <a href="mailto:osmansiddiquer@gmail.com">[ Email ]</a>
+        <a href="#" onclick="event.preventDefault(); startSnakeGame()">[ Play Snake ]</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-header">
+        <span class="prompt">$</span> ABOUT_ME
+      </div>
+      <p style="margin-bottom: 20px; color: var(--fg); font-size: 19px;">
+        Technophile and proactive learner at MIT with excellent analytical skills. CTO at Sciloop, where my job is to make new things. Passionate about computational physics, ML applications in soft robotics, and building efficient distributed systems. I like strongly typed languages and nerdy C++ code.
+      </p>
+      <div class="about-grid">
+        <div class="stat-box" data-label="LOCATION">
+          <div class="stat-value">SF / MIT</div>
+          <div class="stat-desc">San Francisco & Cambridge</div>
+        </div>
+        <div class="stat-box" data-label="GPA">
+          <div class="stat-value">4.90 / 5.00</div>
+          <div class="stat-desc">MIT CS&E</div>
+        </div>
+        <div class="stat-box" data-label="FOCUS">
+          <div class="stat-value">ML + Systems</div>
+          <div class="stat-desc">Agents, distributed arch, robotics</div>
+        </div>
+        <div class="stat-box" data-label="VIBES">
+          <div class="stat-value">Builder</div>
+          <div class="stat-desc">Always exploring, always building</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="section-header">
+        <span class="prompt">$</span> WORK_EXPERIENCE
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="role">CTO</div>
+          <div class="company">Sciloop (YC F25)</div>
+          <div class="date">Aug 2025 - Present // San Francisco, CA</div>
+          <div class="desc">My job is to make new things. Testing models in frontier STEM problems.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="role">Software Development Intern</div>
+          <div class="company">MIT CSAIL</div>
+          <div class="date">May 2025 - Oct 2025 // Cambridge, MA</div>
+          <div class="desc">Porting Finch.jl to Python - bridging high-performance sparse computing to the Python ecosystem.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="role">Software Developer Intern</div>
+          <div class="company">KellisLab</div>
+          <div class="date">Feb 2025 - May 2025 // Hybrid</div>
+          <div class="desc">UI/UX improvements and automation of repetitive workflows through AI-driven Agents using LangChain.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="role">Research Intern</div>
+          <div class="company">TUKL-NUST R&D Center</div>
+          <div class="date">Jun 2024 - Sep 2024 // Islamabad, Pakistan</div>
+          <div class="desc">Remote sensing research - AI-driven forest segmentation using the MajorTOM dataset.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-header">
+        <span class="prompt">$</span> SKILL_TREE
+      </div>
+      <div class="skills-container">
+        <div class="skill-row">
+          <span class="skill-name">Python</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="95"></div></div>
+          <span class="skill-pct">95%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">C / C++</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="90"></div></div>
+          <span class="skill-pct">90%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">JavaScript</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="85"></div></div>
+          <span class="skill-pct">85%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">TypeScript</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="80"></div></div>
+          <span class="skill-pct">80%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">React</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="80"></div></div>
+          <span class="skill-pct">80%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">PyTorch</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="85"></div></div>
+          <span class="skill-pct">85%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Docker</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="75"></div></div>
+          <span class="skill-pct">75%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">MongoDB</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="70"></div></div>
+          <span class="skill-pct">70%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Blender</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="65"></div></div>
+          <span class="skill-pct">65%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Unity</span>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="60"></div></div>
+          <span class="skill-pct">60%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-header">
+        <span class="prompt">$</span> ls ~/PROJECTS
+      </div>
+      <div class="projects-grid">
+        <div class="project-card pong-card" onclick="OsmanPong.open()" title="run pong in the browser">
+          <span class="proj-lang">C → WASM</span>
+          <div class="proj-name">Pong <span class="proj-runnable">▶ playable</span></div>
+          <div class="proj-desc">Console Pong written in plain C — compiled to WebAssembly and rendered live on a WebGL terminal, right here in the site. Click to boot the binary.</div>
+          <div class="proj-stars">* 1</div>
+          <div class="pong-card-actions">
+            <button class="proj-run" onclick="event.stopPropagation(); OsmanPong.open()">▶ run pong.exe</button>
+            <a class="proj-src" href="https://github.com/Osmansiddiquer/pong" target="_blank" onclick="event.stopPropagation()">source ↗</a>
+          </div>
+        </div>
+        <a class="project-card" href="https://github.com/Osmansiddiquer/Game-Engine" target="_blank">
+          <span class="proj-lang">C++</span>
+          <div class="proj-name">Game Engine</div>
+          <div class="proj-desc">OOP-based 2D game engine built from scratch in C++ as a 3-person team project.</div>
+        </a>
+        <a class="project-card" href="https://github.com/Osmansiddiquer/2D-Inverse-Kinematic-Animation" target="_blank">
+          <span class="proj-lang">JavaScript</span>
+          <div class="proj-name">2D Inverse Kinematics</div>
+          <div class="proj-desc">Real-time 2D inverse kinematics solving servo-motor angles from target coordinates, with a live interactive demo.</div>
+        </a>
+        <a class="project-card" href="https://github.com/Osmansiddiquer/looplets-demo-impl" target="_blank">
+          <span class="proj-lang">Python</span>
+          <div class="proj-name">Looplets</div>
+          <div class="proj-desc">From-scratch implementation of the Looplets language for representing and iterating over sparse tensors, based on the original research paper.</div>
+        </a>
+        <a class="project-card" href="https://github.com/Sciloop-Labs/LitFinder" target="_blank">
+          <span class="proj-lang">Python</span>
+          <div class="proj-name">LitFinder</div>
+          <div class="proj-desc">Sciloop Labs — a modular agentic pipeline that searches, extracts, and ranks research papers from a natural-language query: Gemini-generated criteria, Semantic Scholar retrieval, and VoyageAI embeddings + reranking over a cached FAISS index.</div>
+          <div class="proj-stars">* 1</div>
+        </a>
+        <a class="project-card" href="https://github.com/Osmansiddiquer/CS336" target="_blank">
+          <span class="proj-lang">Python</span>
+          <div class="proj-name">LLM From Scratch</div>
+          <div class="proj-desc">Stanford CS336 — building a language model from the ground up: BPE tokenizer, word2vec, and training internals implemented from scratch.</div>
+        </a>
+        <a class="project-card" href="https://github.com/Osmansiddiquer/MajorTOM-Dataset-For-Forest-Segmentation" target="_blank">
+          <span class="proj-lang">Jupyter</span>
+          <div class="proj-name">Forest Segmentation Dataset</div>
+          <div class="proj-desc">Research-grade pipeline preparing MajorTOM satellite imagery for self-supervised forest segmentation — distributed metadata processing and a streaming PyTorch dataset.</div>
+        </a>
+        <a class="project-card" href="https://github.com/Osmansiddiquer/Protein-Visualization-App" target="_blank">
+          <span class="proj-lang">Python</span>
+          <div class="proj-name">ESMFold Protein Predictor</div>
+          <div class="proj-desc">Deployed Streamlit app that predicts and visualizes 3D protein structures from a sequence using Meta's ESM-2 / ESMFold model.</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="section-header">
+        <span class="prompt">$</span> EDUCATION
+      </div>
+      <div class="edu-item">
+        <div class="edu-school">Massachusetts Institute of Technology</div>
+        <div class="edu-degree">B.S. Computer Science and Engineering</div>
+        <div class="edu-meta">Aug 2024 - Jun 2026 // GPA: 4.90/5.00</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-school">NUST - National University of Sciences & Technology</div>
+        <div class="edu-degree">B.E. Computer Software Engineering</div>
+        <div class="edu-meta">Sep 2022 - Jun 2024 // GPA: 3.95/4.00</div>
+      </div>
+      <div class="edu-item" style="border-color: var(--fg-dim);">
+        <div class="edu-school" style="font-size:9px;">Certifications</div>
+        <div class="edu-degree" style="font-size:17px;">Deep Learning Specialization (DeepLearning.AI) | ML Specialization (Stanford) | Responsive Web Design (freeCodeCamp)</div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-header">
+        <span class="prompt">$</span> CONTACT
+      </div>
+      <div class="contact-grid">
+        <a class="contact-item" href="mailto:osmansiddiquer@gmail.com">
+          <div class="icon">&gt;_</div>
+          <div style="color:var(--fg-bright)">Email</div>
+          <div class="label">osmansiddiquer@gmail.com</div>
+        </a>
+        <a class="contact-item" href="https://github.com/Osmansiddiquer" target="_blank">
+          <div class="icon">{&nbsp;}</div>
+          <div style="color:var(--fg-bright)">GitHub</div>
+          <div class="label">Osmansiddiquer</div>
+        </a>
+        <a class="contact-item" href="https://www.linkedin.com/in/osman-siddiquer/" target="_blank">
+          <div class="icon">in</div>
+          <div style="color:var(--fg-bright)">LinkedIn</div>
+          <div class="label">osman-siddiquer</div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>OSMAN.SYS v2.0 // Rendered in the terminal of the web // &copy; 2026</div>
+    <div class="easter-egg-hint">hint: try the konami code</div>
+  </footer>
+
+  <!-- AVATAR BUDDY -->
+  <div id="avatar-buddy" onclick="avatarPoke()" title="psst — click me">
+    <div id="avatar-bubble"></div>
+    <div id="avatar-face">
+      <!-- pixel-art bust, line-art in currentColor so it adapts to every theme -->
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <!-- headphone band -->
+        <rect x="3" y="1" width="10" height="1"/>
+        <rect x="2" y="2" width="1" height="2"/>
+        <rect x="13" y="2" width="1" height="2"/>
+        <!-- hair -->
+        <rect x="4" y="2" width="8" height="2"/>
+        <rect x="3" y="3" width="1" height="3"/>
+        <rect x="12" y="3" width="1" height="3"/>
+        <!-- ear cups -->
+        <rect x="2" y="6" width="2" height="3"/>
+        <rect x="12" y="6" width="2" height="3"/>
+        <!-- face -->
+        <rect x="4" y="4" width="8" height="6"/>
+        <!-- glasses (eyes carved out via bg color) -->
+        <rect x="5" y="6" width="2" height="2" fill="#0a0a0a"/>
+        <rect x="9" y="6" width="2" height="2" fill="#0a0a0a"/>
+        <rect x="7" y="6" width="2" height="1"/>
+        <!-- smile -->
+        <rect x="6" y="9" width="4" height="1" fill="#0a0a0a"/>
+        <!-- neck + shoulders -->
+        <rect x="6" y="10" width="4" height="1"/>
+        <rect x="3" y="11" width="10" height="4"/>
+        <rect x="7" y="11" width="2" height="2" fill="#0a0a0a"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SNAKE GAME MODAL -->
+  <div id="game-modal">
+    <h2>SNAKE.EXE</h2>
+    <canvas id="game-canvas" width="300" height="300"></canvas>
+    <div class="game-info">Score: <span id="game-score">0</span> // Arrow keys to move</div>
+    <button id="game-close" onclick="closeSnakeGame()">[ ESC / CLOSE ]</button>
+  </div>
+
+  <!-- KONAMI CODE REWARD -->
+  <div id="konami-reward">
+    <h3>SECRET UNLOCKED!</h3>
+    <p>You found the easter egg! Here's a secret:<br><br>
+    <span style="color:var(--accent)">"Any sufficiently advanced technology<br>is indistinguishable from magic."</span><br>
+    <span style="color:var(--fg-dim)">- Arthur C. Clarke</span></p>
+    <br>
+    <p style="font-size:16px; color:var(--fg-dim);">P.S. Osman's favorite bug is the one<br>that only shows up in production.</p>
+    <button id="konami-close" onclick="document.getElementById('konami-reward').classList.remove('active')">[ OK ]</button>
+  </div>
+
+  <!-- PONG: C compiled to WebAssembly, rendered on a WebGL terminal -->
+  <script src="assets/pong/vendor/xterm.js"></script>
+  <script src="assets/pong/vendor/xterm-addon-webgl.js"></script>
+  <script src="assets/pong/pong.js"></script>
+  <script src="assets/pong/pong-runtime.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

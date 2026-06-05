@@ -1,0 +1,14 @@
+# dependencies / build tooling
+node_modules/
+
+# local agent + tooling config (not part of the site)
+.claude/
+.rocketride/
+
+# deploy artifacts
+frontend.zip
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
