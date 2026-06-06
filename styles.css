@@ -1042,9 +1042,11 @@ body.theme-pink {
 }
 .pong-card .proj-src:hover { color: var(--accent); }
 
-/* Pong needs a keyboard, so on touch devices the card is just a GitHub link:
-   hide the "playable" badge + run button and swap the description copy. */
+/* Pong needs a keyboard, so on touch devices the card is just a GitHub link.
+   Drop every "playable here" cue (the badge, run button, desktop copy) and
+   instead flag it as a desktop-only game. */
 .pong-desc-mobile { display: none; }
+.proj-pc-only { display: none; }
 body.touch .pong-card .proj-runnable,
 body.touch .pong-card .proj-run,
 body.touch .pong-desc-desktop { display: none; }
@@ -1053,6 +1055,19 @@ body.touch .pong-card .proj-src {
   font-size: 16px;
   color: var(--accent);
 }
+
+/* "▶ play on PC" badge — informational (outlined), not a live action */
+body.touch .proj-pc-only {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-dim);
+  border: 1px solid var(--fg-dim);
+  padding: 1px 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.pong-pc-hint { color: var(--fg); }
 
 /* The pong window — a draggable terminal that runs the WASM binary */
 #pong-window {
