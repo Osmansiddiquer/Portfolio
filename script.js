@@ -81,6 +81,18 @@ function setMusicLabel() {
   if (btn) btn.innerHTML = musicOn ? '♫ ON' : '♫ OFF';
 }
 
+const MUSIC_CREDIT = '♫ Now playing: "Hero\'s Shadow" — My Hero Academia';
+let musicCreditTimer = null;
+
+function showMusicCredit() {
+  const el = document.getElementById('now-playing');
+  if (!el) return;
+  el.textContent = MUSIC_CREDIT;
+  el.classList.add('show');
+  clearTimeout(musicCreditTimer);
+  musicCreditTimer = setTimeout(() => el.classList.remove('show'), 4000);
+}
+
 function startMusic() {
   bgMusic.volume = BG_MUSIC_VOL;
   const p = bgMusic.play();
@@ -88,6 +100,7 @@ function startMusic() {
   musicOn = true;
   musicStarted = true;
   setMusicLabel();
+  showMusicCredit();
 }
 
 function toggleMusic() {
@@ -448,9 +461,57 @@ const avatarQuotes = [
   'Always exploring, always building.',
   'My job is to make new things.',
   'Sleep.ko: module not found.',
-  'I write nerdy C++ for fun.',
   'Caffeine -> code -> repeat.',
+  'If a bug has no observer, is it still a bug? \n ...yes.',
+  'I think, therefore I am... probably a race condition.',
+  'The cake is a lie, but the segfault is real.',
+  'We are all just NPCs in someone else\'s git history.',
+  'To understand recursion, first understand recursion.',
+  'I named a variable "temp". It has been here three years.',
+  'Schrodinger\'s code: it works and it doesn\'t until you push.',
+  'A bug, when it is fixed, is no longer a bug.',
+  'The server is down because it can\'t be high.',
+  'Time is an illusion. Deadlines doubly so.',
+  'I don\'t fear death. I fear merge conflicts.',
+  'Every "it works on my machine" is a tiny act of faith.',
+  'Reality is the only API with no rate limit.',
+  'If you delete all the code, there is no more code... or bugs',
+  'Entropy always wins. So does the deadline.',
+  'Was the void staring back, or just my dark-mode terminal?',
+  'The function returns once it has returned.',
+  'I\'m not lazy. I\'m conserving energy for when I really need it.',
+  'A wise man once said: "// TODO: figure this out later".',
+  'Determinism is a comforting lie we tell our debuggers.',
+  'People die when they are killed.',
+  'You cannot push if you have nothing to commit.',
+  'When the loop ends, it stops looping.',
+  'Code that is not written cannot be debugged.',
+  'The most efficient code is the code I was too tired to write.',
+  'If the test passes, then it did not fail.',
+  'A deadline is late only after it has passed.',
+  'Nothing is null until it is not something.',
+  'You only run out of memory when there is none left.',
+  'A merge conflict happens when two things conflict.',
+  'If nobody reads the docs, the docs are unread.',
+  'The future has not happened yet. That is why it is the future.',
+  'My ultimate goal in life is to be listless.',
+  'Someone who is carried to class still, technically, arrives.',
+  'If I move any slower I qualify as a static variable.',
+  'A nap is just garbage collection for the soul.',
+  'Listlessness is the goal, not a bug.',
+  'A hero who loses has, regrettably, not won.',
+  'Effort is a finite resource.',
+  'When you are asleep, you are not awake.',
+  'If you die, I\'ll kill you.',
 ];
+
+// Shuffle the quote order on each load (Fisher-Yates) so the avatar
+// doesn't always open with the same line, while still cycling through all.
+for (let i = avatarQuotes.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [avatarQuotes[i], avatarQuotes[j]] = [avatarQuotes[j], avatarQuotes[i]];
+}
+
 const avatarPokes = [
   'hey!', 'sup!', 'yo!', 'hi there!', 'boop!', 'howdy!',
   'oh, hi!', "what's up?", 'hello, world!', '*waves*', 'beep boop!',
